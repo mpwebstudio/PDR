@@ -8,6 +8,9 @@ using PDR.PatientBooking.Service.PatientServices.Validation;
 
 namespace PDR.PatientBooking.Service.IoC
 {
+    using BookingService;
+    using BookingService.Validation;
+
     public static class ServiceCollectionExtensions
     {
         public static void RegisterPatientBookingServices(this IServiceCollection collection)
@@ -20,6 +23,9 @@ namespace PDR.PatientBooking.Service.IoC
 
             collection.AddScoped<IClinicService, ClinicService>();
             collection.AddScoped<IAddClinicRequestValidator, AddClinicRequestValidator>();
+
+            collection.AddScoped<IBookingService, BookingService>();
+            collection.AddScoped<IAddBookingRequestValidation, AddBookingRequestValidation>();
         }
     }
 }
