@@ -5,7 +5,7 @@
     using Setup;
 
     [TestFixture]
-    public class AddPatientRequestValidatorTests : BaseClass
+    public class AddBookingRequestValidatorTests : BaseClass
     {
         [Test]
         public void AddPatientRequestValidator_WhitStartDateInThePass_ReturnError()
@@ -195,6 +195,25 @@
 
             //Assert
             Assert.False(result.PassedValidation);
+        }
+
+        [Test]
+        public void AddBooking_SameSlotAsCanceledAppointment_ReturnNoError()
+        {
+            //Arrange
+            var request = new AddBookingRequest
+            {
+                DoctorId = 4,
+                StartTime = _time.AddMinutes(130),
+                EndTime = _time.AddMinutes(145),
+                PatientId = 22
+            };
+
+            //Act
+            var result = _addBookingRequestValidation.ValidateRequest(request);
+
+            //Assert
+            Assert.True(result.PassedValidation);
         }
     }
 }

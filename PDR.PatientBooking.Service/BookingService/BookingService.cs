@@ -4,7 +4,9 @@
     using System.Linq;
     using Data;
     using Data.Models;
+    using Microsoft.EntityFrameworkCore;
     using Request;
+    using Responses;
     using Validation;
 
     public class BookingService : IBookingService
@@ -37,6 +39,34 @@
             };
 
             _context.Order.Add(myBooking);
+            _context.SaveChanges();
+        }
+
+        public GetPatientNextAppointmentResponse GetPatientNextAppointment(long identificationNumber)
+        {
+            return _context.Order.Where(x => x.PatientId == identificationNumber && x.StartTime > DateTime.Now && !x.IsCancelled)
+                .AsNoTracking()
+                .OrderBy(x => x.StartTime)
+                .Select(x => new GetPatientNextAppointmentResponse
+                {
+                    Id = x.Id,
+                    DoctorId = x.DoctorId,
+                    StartTime = x.StartTime,
+                    EndTime = x.EndTime
+                })
+                .FirstOrDefault();
+        }
+
+        public void CancelBooking(Guid bookingId)
+        {
+            var booking = _context.Order.Find(bookingId);
+
+            if (booking == null)
+            {
+                throw new ArgumentException("Booking not found");
+            }
+
+            booking.IsCancelled = true;
             _context.SaveChanges();
         }
     }

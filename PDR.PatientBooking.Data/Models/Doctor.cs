@@ -5,6 +5,11 @@ namespace PDR.PatientBooking.Data.Models
 {
     public class Doctor
     {
+        public Doctor()
+        {
+            Orders = new HashSet<Order>();
+        }
+
         public long Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

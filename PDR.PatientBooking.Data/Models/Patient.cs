@@ -5,6 +5,11 @@ namespace PDR.PatientBooking.Data.Models
 {
     public class Patient
     {
+        public Patient()
+        {
+            Orders = new HashSet<Order>();
+        }
+
         public long Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -12,7 +17,7 @@ namespace PDR.PatientBooking.Data.Models
         public int Gender { get; set; }
         public string Email { get; set; }
         public DateTime Created { get; set; }
-        public virtual long ClinicId { get; set; }
+        public long ClinicId { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual Clinic Clinic { get; set; }
     }

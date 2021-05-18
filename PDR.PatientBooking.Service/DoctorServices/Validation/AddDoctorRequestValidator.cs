@@ -1,8 +1,8 @@
-﻿using PDR.PatientBooking.Data;
+﻿using System.Collections.Generic;
+using System.Linq;
+using PDR.PatientBooking.Data;
 using PDR.PatientBooking.Service.DoctorServices.Requests;
 using PDR.PatientBooking.Service.Validation;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PDR.PatientBooking.Service.DoctorServices.Validation
 {
@@ -28,7 +28,7 @@ namespace PDR.PatientBooking.Service.DoctorServices.Validation
             return result;
         }
 
-        public bool MissingRequiredFields(AddDoctorRequest request, ref PdrValidationResult result)
+        private static bool MissingRequiredFields(AddDoctorRequest request, ref PdrValidationResult result)
         {
             var errors = new List<string>();
 

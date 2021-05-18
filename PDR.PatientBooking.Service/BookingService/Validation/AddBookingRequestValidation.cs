@@ -52,7 +52,8 @@
         private bool AppointmentAlreadyExistInDb(AddBookingRequest request, ref PdrValidationResult result)
         {
             if (_context.Order.Any(x => x.DoctorId == request.DoctorId && x.StartTime < request.EndTime
-                                                                       && x.EndTime > request.StartTime))
+                                                                       && x.EndTime > request.StartTime
+                                                                       && !x.IsCancelled))
             {
                 result.PassedValidation = false;
                 result.Errors.Add("Appointment booked already");
