@@ -31,18 +31,10 @@ namespace PDR.PatientBooking.Service.Tests.PatientServices.Validation
             // Mock setup
             _context = new PatientBookingContext(new DbContextOptionsBuilder<PatientBookingContext>().UseInMemoryDatabase(Guid.NewGuid().ToString()).Options);
 
-            // Mock default
-            SetupMockDefaults();
-
             // Sut instantiation
             _addPatientRequestValidator = new AddPatientRequestValidator(
                 _context
             );
-        }
-
-        private void SetupMockDefaults()
-        {
-
         }
 
         [Test]
@@ -181,9 +173,10 @@ namespace PDR.PatientBooking.Service.Tests.PatientServices.Validation
             //arrange
             var request = GetValidRequest();
             request.ClinicId++; //offset clinicId
+            var toValidate = _fixture.Build<AddPatientRequest>().With(x => x.Email, "test@test.com").Create();
 
             //act
-            var res = _addPatientRequestValidator.ValidateRequest(_fixture.Create<AddPatientRequest>());
+            var res = _addPatientRequestValidator.ValidateRequest(toValidate);
 
             //assert
             res.PassedValidation.Should().BeFalse();

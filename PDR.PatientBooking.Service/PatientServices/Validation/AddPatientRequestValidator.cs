@@ -44,6 +44,9 @@ namespace PDR.PatientBooking.Service.PatientServices.Validation
             if (string.IsNullOrEmpty(request.Email))
                 errors.Add("Email must be populated");
 
+            if (!IsEmailValid.Validate(request.Email))
+                errors.Add("Email must be a valid email address");
+
             if (errors.Any())
             {
                 result.PassedValidation = false;
